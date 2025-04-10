@@ -11,6 +11,7 @@ fun generateBoard(rows: Int, columns: Int): Board? {
         println("Map size can't be less than 2. Please, enter correct map size.")
         return null
     }
+    println("Board with $rows rows and $columns columns was generated.")
     return Board(rows, columns)
 }
 
