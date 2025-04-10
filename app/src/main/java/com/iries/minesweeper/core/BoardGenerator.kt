@@ -17,7 +17,7 @@ fun generateBoard(rows: Int, columns: Int): Board? {
 
 fun generateMines(startPoint: Point, board: Board, minesNum: Int): ArrayList<Point>? {
 
-    if (minesNum < minMinesNumber) {
+    if (minesNum < minMinesNumber || minesNum > board.rows * board.columns) {
         println("Mines number can't be below 1. Please, enter correct amount of mines.")
         return null
     } else if (startPoint.x >= board.rows || startPoint.y >= board.columns) {
@@ -26,19 +26,28 @@ fun generateMines(startPoint: Point, board: Board, minesNum: Int): ArrayList<Poi
     }
 
     val minesList: ArrayList<Point> = ArrayList()
+    val allPoints: ArrayList<Point> = ArrayList()
+
+    for (i in 0..<board.columns) { // for each map's column
+        for (j in 0..<board.rows) {
+            if (!(startPoint.x == j && startPoint.y == i))
+                allPoints.add(Point(j, i))
+        }
+    }
 
     for (i in 0..<minesNum) {
         var isComplete = false
-        var x = 0
-        var y = 0
+        var point: Point? = null
         while (!isComplete) {
-            x = Random.nextInt(0, board.rows)
-            y = Random.nextInt(0, board.columns)
-            if (!minesList.any { p -> p.x == x && p.y == y }
-                && x != startPoint.x && y != startPoint.y)
+            val index = Random.nextInt(0, allPoints.size)
+            point = allPoints[index]
+            if (!minesList.any { p -> p.x == point.x && p.y == point.y })
                 isComplete = true
         }
-        minesList.add(Point(x, y))
+        if (point != null) {
+            allPoints.remove(point)
+            minesList.add(point)
+        }
     }
 
     return minesList

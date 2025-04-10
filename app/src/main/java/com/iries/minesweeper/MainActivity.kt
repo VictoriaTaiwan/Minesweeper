@@ -57,7 +57,7 @@ fun createTextBoard(): String {
     val board = generateBoard(10, 10)
 
     val startPoint = Point(2, 1)
-    val mines = generateMines(startPoint, board!!, 30)
+    val mines = generateMines(startPoint, board!!, 40)
 
     val text = StringBuilder()
     for (i in 0..<board.columns) { // for each map's column
