@@ -25,27 +25,20 @@ fun generateMines(startPoint: Point, board: Board, minesNum: Int): ArrayList<Poi
         return null
     }
 
-    val maxSafeArea = board.rows * board.columns - minesNum
-    var checkedCellNum = 0
-    var currentMinesNum = 0
     val minesList: ArrayList<Point> = ArrayList()
 
-    mapLoop@ for (i in 0..<board.columns) { // for each map's column
-        for (j in 0..<board.rows) { // for each colum's row
-            if (currentMinesNum == minesNum) {
-                println("All mines are generated.")
-                break@mapLoop
-            }
-            checkedCellNum++
-            if (!(startPoint.y == i && startPoint.x == j)) {
-                // if safe area size is maxed or it's a mine cell
-                if (checkedCellNum >= maxSafeArea || Random.nextBoolean()) {
-                    currentMinesNum++
-                    minesList.add(Point(j, i))
-                    println("Mine ($j, $i) was placed to the board.")
-                }
-            }
+    for (i in 0..<minesNum) {
+        var isComplete = false
+        var x = 0
+        var y = 0
+        while (!isComplete) {
+            x = Random.nextInt(0, board.rows)
+            y = Random.nextInt(0, board.columns)
+            if (!minesList.any { p -> p.x == x && p.y == y }
+                && x != startPoint.x && y != startPoint.y)
+                isComplete = true
         }
+        minesList.add(Point(x, y))
     }
 
     return minesList

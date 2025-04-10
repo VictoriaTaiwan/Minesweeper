@@ -9,11 +9,11 @@ import org.junit.Test
 class BoardGeneratorTest {
     @Test
     fun board_generation_isCorrect() {
-        val board = generateBoard(3, 2)
+        val board = generateBoard(5, 4)
         assertNotNull(board)
 
         val startPoint = Point(2, 1)
-        val mines = generateMines(startPoint, board!!, 2)
+        val mines = generateMines(startPoint, board!!, 10)
         assertNotNull(mines)
 
         for (i in 0..<board.columns) { // for each map's column
