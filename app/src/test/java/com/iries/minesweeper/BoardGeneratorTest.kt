@@ -3,30 +3,32 @@ package com.iries.minesweeper
 import com.iries.minesweeper.core.Point
 import com.iries.minesweeper.core.generateBoard
 import com.iries.minesweeper.core.generateMines
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class BoardGeneratorTest {
     @Test
     fun board_generation_isCorrect() {
+        // Check that creation of the board with 0 rows and 0 columns is impossible
+        assertThrows(Exception::class.java) {
+            generateBoard(0,0)
+        }
+
+        // Check that rows number is 5
         val board = generateBoard(5, 4)
-        assertNotNull(board)
+        assertEquals(board.rows, 5)
 
         val startPoint = Point(2, 1)
-        val mines = generateMines(startPoint, board!!, 10)
-        assertNotNull(mines)
+        val minesNumber = 10
+        val mines = generateMines(startPoint, board, minesNumber)
+        // Check that mines number is 10
+        assertEquals(mines.size, 10)
 
-        for (i in 0..<board.columns) { // for each map's column
-            println(" ")
-            for (j in 0..<board.rows) {
-                if (mines?.any { p -> p.x == j && p.y == i } == true) print(" Mine ")
-                else {
-                    val safePointMessage =
-                        if (startPoint.x == j && startPoint.y == i) (" Start ") else (" Safe ")
-                    print(safePointMessage)
-                }
-            }
-            println(" ")
+        // Check that mines creation with a negative starting point is impossible.
+        val startPointToFail = Point(-2, 1)
+        assertThrows(Exception::class.java) {
+            generateMines(startPointToFail, board, minesNumber)
         }
     }
 }

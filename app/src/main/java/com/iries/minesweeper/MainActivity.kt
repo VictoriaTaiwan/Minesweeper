@@ -27,6 +27,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MinesweeperTheme {
+                // Example of a simple text based UI for the game
+                /*
                 val boardText = remember { mutableStateOf("Click the button to start!") }
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -47,32 +49,33 @@ class MainActivity : ComponentActivity() {
                         boardText.value = createTextBoard()
                     }
                 }
+                */
             }
         }
     }
 }
 
 
+/*
 fun createTextBoard(): String {
     val board = generateBoard(10, 10)
 
-    val startPoint = Point(2, 1)
-    val mines = generateMines(startPoint, board!!, 20)
+    val startPoint = Point(5, 5)
+    val mines = generateMines(startPoint, board, 20)
 
     val text = StringBuilder()
-    if (mines != null)
-        for (i in 0..<board.columns) { // for each map's column
-            text.append("\r\n")
-            for (j in 0..<board.rows) {
-                if (mines.any { p -> p.x == j && p.y == i }) text.append(" \uD83D\uDCA3 ")
-                else {
-                    val safePointMessage =
-                        if (startPoint.x == j && startPoint.y == i) (" \uD83D\uDEA9 ") else (" \uD83D\uDD32 ")
-                    text.append(safePointMessage)
-                }
+    for (i in 0..<board.columns) { // for each map's column
+        text.append("\r\n")
+        for (j in 0..<board.rows) {
+            if (mines.any { p -> p.x == j && p.y == i }) text.append(" \uD83D\uDCA3 ")
+            else {
+                val safePointMessage =
+                    if (startPoint.x == j && startPoint.y == i) (" \uD83D\uDEA9 ") else (" \uD83D\uDD32 ")
+                text.append(safePointMessage)
             }
-            text.append("\r\n")
         }
-    else text.append("Error, unable to generate mines.")
+        text.append("\r\n")
+    }
     return text.toString()
 }
+*/
