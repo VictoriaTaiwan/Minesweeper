@@ -2,30 +2,37 @@ package com.iries.minesweeper.core
 
 import kotlin.random.Random
 
-fun generateMap(startPoint: Point, mapBounds: Point, minesNum: Int): ArrayList<Point>? {
+private const val minBoardSize = 2
+private const val minMinesNumber = 1
 
-    // Handling special cases where map generation is impossible
-    val mapSize = mapBounds.x * mapBounds.y
-    if (mapSize < 2) {
+fun generateBoard(rows: Int, columns: Int): Board? {
+    val boardSize = rows * columns
+    if (boardSize < minBoardSize) {
         println("Map size can't be less than 2. Please, enter correct map size.")
         return null
-    } else if (minesNum < 1) {
+    }
+    return Board(rows, columns)
+}
+
+fun generateMines(startPoint: Point, board: Board, minesNum: Int): ArrayList<Point>? {
+
+    if (minesNum < minMinesNumber) {
         println("Mines number can't be below 1. Please, enter correct amount of mines.")
         return null
-    } else if (startPoint.x >= mapBounds.x || startPoint.y >= mapBounds.y) {
+    } else if (startPoint.x >= board.rows || startPoint.y >= board.columns) {
         println("Start point is out of bounds. Please, enter correct start point.")
         return null
     }
 
-    val maxSafeArea = mapSize - minesNum
+    val maxSafeArea = board.rows * board.columns - minesNum
     var checkedCellNum = 0
     var currentMinesNum = 0
     val minesList: ArrayList<Point> = ArrayList()
 
-    mapLoop@ for (i in 0..<mapBounds.y) { // for each map's column
-        for (j in 0..<mapBounds.x) { // for each colum's row
+    mapLoop@ for (i in 0..<board.columns) { // for each map's column
+        for (j in 0..<board.rows) { // for each colum's row
             if (currentMinesNum == minesNum) {
-                println("All mines are generated")
+                println("All mines are generated.")
                 break@mapLoop
             }
             checkedCellNum++
@@ -34,20 +41,8 @@ fun generateMap(startPoint: Point, mapBounds: Point, minesNum: Int): ArrayList<P
                 if (checkedCellNum >= maxSafeArea || Random.nextBoolean()) {
                     currentMinesNum++
                     minesList.add(Point(j, i))
-                    println("Mine ($j, $i)")
+                    println("Mine ($j, $i) was placed to the board.")
                 }
-            }
-        }
-    }
-
-    for (i in 0..mapBounds.y) { // for each map's column
-        println(" ")
-        for (j in 0..<mapBounds.x) {
-            if (minesList.any { p -> p.x == j && p.y == i }) print(" Mine ")
-            else {
-                if (startPoint.x == j && startPoint.y == i)
-                    print(" Start ")
-                else print(" Safe ")
             }
         }
     }
