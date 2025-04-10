@@ -24,11 +24,14 @@ import java.lang.StringBuilder
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        println(createTextBoard())
+
+        // Example of a simple text based UI for the game
+        /*
         enableEdgeToEdge()
         setContent {
             MinesweeperTheme {
-                // Example of a simple text based UI for the game
-                /*
                 val boardText = remember { mutableStateOf("Click the button to start!") }
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -49,14 +52,13 @@ class MainActivity : ComponentActivity() {
                         boardText.value = createTextBoard()
                     }
                 }
-                */
             }
         }
+        */
     }
 }
 
 
-/*
 fun createTextBoard(): String {
     val board = generateBoard(10, 10)
 
@@ -78,4 +80,3 @@ fun createTextBoard(): String {
     }
     return text.toString()
 }
-*/
