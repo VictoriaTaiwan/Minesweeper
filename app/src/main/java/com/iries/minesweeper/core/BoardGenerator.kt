@@ -17,8 +17,9 @@ fun generateBoard(rows: Int, columns: Int): Board? {
 
 fun generateMines(startPoint: Point, board: Board, minesNum: Int): ArrayList<Point>? {
 
-    if (minesNum < minMinesNumber || minesNum > board.rows * board.columns) {
-        println("Mines number can't be below 1. Please, enter correct amount of mines.")
+    if (minesNum < minMinesNumber || minesNum >= board.rows * board.columns) {
+        println("Mines number can't be below 1, bigger than board size or equals to it. " +
+                "Please, enter correct amount of mines.")
         return null
     } else if (startPoint.x >= board.rows || startPoint.y >= board.columns) {
         println("Start point is out of bounds. Please, enter correct start point.")
