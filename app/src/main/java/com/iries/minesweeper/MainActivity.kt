@@ -2,23 +2,9 @@ package com.iries.minesweeper
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.iries.minesweeper.core.Point
+import com.iries.minesweeper.core.Cell
 import com.iries.minesweeper.core.generateBoard
 import com.iries.minesweeper.core.generateMines
-import com.iries.minesweeper.ui.theme.MinesweeperTheme
 import java.lang.StringBuilder
 
 class MainActivity : ComponentActivity() {
@@ -62,8 +48,8 @@ class MainActivity : ComponentActivity() {
 fun createTextBoard(): String {
     val board = generateBoard(10, 10)
 
-    val startPoint = Point(5, 5)
-    val mines = generateMines(startPoint, board, 20)
+    val startCell = Cell(5, 5)
+    val mines = generateMines(startCell, board, 20)
 
     val text = StringBuilder()
     for (i in 0..<board.columns) { // for each map's column
@@ -72,7 +58,7 @@ fun createTextBoard(): String {
             if (mines.any { p -> p.x == j && p.y == i }) text.append(" \uD83D\uDCA3 ")
             else {
                 val safePointMessage =
-                    if (startPoint.x == j && startPoint.y == i) (" \uD83D\uDEA9 ") else (" \uD83D\uDD32 ")
+                    if (startCell.x == j && startCell.y == i) (" \uD83D\uDEA9 ") else (" \uD83D\uDD32 ")
                 text.append(safePointMessage)
             }
         }

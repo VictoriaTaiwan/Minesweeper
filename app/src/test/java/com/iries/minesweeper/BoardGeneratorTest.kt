@@ -1,6 +1,6 @@
 package com.iries.minesweeper
 
-import com.iries.minesweeper.core.Point
+import com.iries.minesweeper.core.Cell
 import com.iries.minesweeper.core.generateBoard
 import com.iries.minesweeper.core.generateMines
 import org.junit.Assert.assertEquals
@@ -19,16 +19,16 @@ class BoardGeneratorTest {
         val board = generateBoard(5, 4)
         assertEquals(board.rows, 5)
 
-        val startPoint = Point(2, 1)
+        val startCell = Cell(2, 1)
         val minesNumber = 10
-        val mines = generateMines(startPoint, board, minesNumber)
+        val mines = generateMines(startCell, board, minesNumber)
         // Check that mines number is 10
         assertEquals(mines.size, 10)
 
         // Check that mines creation with a negative starting point is impossible.
-        val startPointToFail = Point(-2, 1)
+        val startCellToFail = Cell(-2, 1)
         assertThrows(Exception::class.java) {
-            generateMines(startPointToFail, board, minesNumber)
+            generateMines(startCellToFail, board, minesNumber)
         }
     }
 }

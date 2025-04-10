@@ -17,7 +17,7 @@ fun generateBoard(rows: Int, columns: Int): Board {
     return Board(rows, columns)
 }
 
-fun generateMines(startPoint: Point, board: Board, minesNum: Int): ArrayList<Point> {
+fun generateMines(startCell: Cell, board: Board, minesNum: Int): ArrayList<Cell> {
     val boardSize = board.rows * board.columns
     // Check that board size isn't less than 2
     if (boardSize < minBoardSize) {
@@ -33,30 +33,30 @@ fun generateMines(startPoint: Point, board: Board, minesNum: Int): ArrayList<Poi
         ))
     }
     // Check that the start point doesn't exceed board's size and isn't negative.
-    if (startPoint.x >= board.rows || startPoint.y >= board.columns
-        || startPoint.x < 0 || startPoint.y < 0
+    if (startCell.x >= board.rows || startCell.y >= board.columns
+        || startCell.x < 0 || startCell.y < 0
     ) {
         throw (Exception("Start point is out of bounds. Please, enter correct start point."))
     }
 
-    val minesList: ArrayList<Point> = ArrayList()
-    val potentialMinePoints: ArrayList<Point> = ArrayList()
+    val minesList: ArrayList<Cell> = ArrayList()
+    val potentialMineCells: ArrayList<Cell> = ArrayList()
 
     // Populate list of all points except the starting point as potential mine slots
     for (i in 0..<board.columns) { // for each board's column
         for (j in 0..<board.rows) { // for each board's row
-            if (!(startPoint.x == j && startPoint.y == i)) // skip the start point
-                potentialMinePoints.add(Point(j, i))
+            if (!(startCell.x == j && startCell.y == i)) // skip the start point
+                potentialMineCells.add(Cell(j, i))
         }
     }
 
     // create a random mine slot excluding already checked slots
     for (i in 0..<minesNum) {
-        var point: Point?
-        val index = Random.nextInt(0, potentialMinePoints.size) // get a random index
-        point = potentialMinePoints[index]
-        potentialMinePoints.remove(point) // remove the point from potential mines list
-        minesList.add(point) // add the point to the actual mines list
+        var cell: Cell?
+        val index = Random.nextInt(0, potentialMineCells.size) // get a random index
+        cell = potentialMineCells[index]
+        potentialMineCells.remove(cell) // remove the point from potential mines list
+        minesList.add(cell) // add the point to the actual mines list
     }
 
     return minesList
