@@ -14,7 +14,7 @@ fun generateMap(startPoint: Point, mapSize: Point, minesNum: Int): ArrayList<Poi
         return null
     }
 
-    val maxSafeArea = map - minesNum - 1 // exclude startPoint
+    val maxSafeArea = map - minesNum
     var checkedCellNum = 0
     var currentMinesNum = 0
     val minesList: ArrayList<Point> = ArrayList()
@@ -22,18 +22,18 @@ fun generateMap(startPoint: Point, mapSize: Point, minesNum: Int): ArrayList<Poi
     mapLoop@ for (i in 0..<mapSize.y) { // for each map's column
         for (j in 0..<mapSize.x) { // for each colum's row
             if (currentMinesNum == minesNum) {
-                // println("All mines are generated")
+                println("All mines are generated")
                 break@mapLoop
             }
+            checkedCellNum++
             if (!(startPoint.y == i && startPoint.x == j)) {
                 // if safe area size is maxed or it's a mine cell
-                if (maxSafeArea == checkedCellNum || Random.nextBoolean()) {
+                if (checkedCellNum >=maxSafeArea || Random.nextBoolean()) {
                     currentMinesNum++
                     minesList.add(Point(j, i))
                     println("Mine ($j, $i)")
                 }
             }
-            checkedCellNum++
         }
     }
 

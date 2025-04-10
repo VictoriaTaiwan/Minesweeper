@@ -16,6 +16,6 @@ class MainActivity : ComponentActivity() {
             MinesweeperTheme {}
         }
 
-        generateMap(Point(1, 0), Point(3, 2), 2)
+        generateMap(Point(2, 1), Point(3, 2), 2)
     }
 }
