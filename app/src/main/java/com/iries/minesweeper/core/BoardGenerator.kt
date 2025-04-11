@@ -1,5 +1,8 @@
 package com.iries.minesweeper.core
 
+import com.iries.minesweeper.core.exceptions.BoardSizeException
+import com.iries.minesweeper.core.exceptions.MinesNumberException
+import com.iries.minesweeper.core.exceptions.StartPointOutOfBoundsException
 import kotlin.random.Random
 
 private const val minBoardSize = 2
@@ -8,11 +11,8 @@ private const val minMinesNumber = 1
 fun generateBoard(rows: Int, columns: Int): Board {
     val boardSize = rows * columns
     // Check that board size isn't less than 2
-    if (boardSize < minBoardSize) {
-        throw (Exception(
-            "Map size can't be less than 2. Please, enter correct map size."
-        ))
-    }
+    if (boardSize < minBoardSize) throw (BoardSizeException())
+
     println("Board with $rows rows and $columns columns was generated.")
     return Board(rows, columns)
 }
@@ -20,24 +20,16 @@ fun generateBoard(rows: Int, columns: Int): Board {
 fun generateMines(startCell: Cell, board: Board, minesNum: Int): ArrayList<Cell> {
     val boardSize = board.rows * board.columns
     // Check that board size isn't less than 2
-    if (boardSize < minBoardSize) {
-        throw (Exception(
-            "Map size can't be less than 2. Please, enter correct map size."
-        ))
-    }
+    if (boardSize < minBoardSize) throw (BoardSizeException())
+
     // Check that mines number isn't less than 1 and doesn't exceed board's size.
-    if (minesNum < minMinesNumber || minesNum >= board.rows * board.columns) {
-        throw (Exception(
-            "Mines number can't be below 1, bigger than board size or equals to it. " +
-                    "Please, enter correct amount of mines."
-        ))
-    }
+    if (minesNum < minMinesNumber || minesNum >= board.rows * board.columns)
+        throw (MinesNumberException())
+
     // Check that the start point doesn't exceed board's size and isn't negative.
     if (startCell.x >= board.rows || startCell.y >= board.columns
         || startCell.x < 0 || startCell.y < 0
-    ) {
-        throw (Exception("Start point is out of bounds. Please, enter correct start point."))
-    }
+    ) throw (StartPointOutOfBoundsException())
 
     val minesList: ArrayList<Cell> = ArrayList()
     val potentialMineCells: ArrayList<Cell> = ArrayList()
