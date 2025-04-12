@@ -1,9 +1,6 @@
 package com.iries.minesweeper
 
 import com.iries.minesweeper.core.Cell
-import com.iries.minesweeper.core.exceptions.BoardSizeException
-import com.iries.minesweeper.core.exceptions.MinesNumberException
-import com.iries.minesweeper.core.exceptions.StartPointOutOfBoundsException
 import com.iries.minesweeper.core.generateBoard
 import com.iries.minesweeper.core.generateMines
 import org.junit.Assert.assertEquals
@@ -14,7 +11,7 @@ class BoardGeneratorTest {
     @Test
     fun board_generation_isCorrect() {
         // Check that creation of the board with 0 rows and 0 columns is impossible
-        assertThrows(BoardSizeException::class.java) {
+        assertThrows(IllegalArgumentException::class.java) {
             generateBoard(0, 0)
         }
 
@@ -30,12 +27,12 @@ class BoardGeneratorTest {
 
         // Check that mines creation with a negative starting point is impossible.
         val startCellToFail = Cell(-2, 1)
-        assertThrows(StartPointOutOfBoundsException::class.java) {
+        assertThrows(IllegalArgumentException::class.java) {
             generateMines(startCellToFail, board, minesNumber)
         }
 
         val minesNumToFail = 0
-        assertThrows(MinesNumberException::class.java) {
+        assertThrows(IllegalArgumentException::class.java) {
             generateMines(startCell, board, minesNumToFail)
         }
     }
