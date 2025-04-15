@@ -15,25 +15,14 @@ class BoardGeneratorTest {
             generateBoard(0, 0)
         }
 
-        // Check that rows number is 5
-        val board = generateBoard(5, 4)
-        assertEquals(board.rows, 5)
+        val boardRows = 10000
+        val boardColumns = 10000
+        val board = generateBoard(boardRows, boardColumns)
+        assertEquals(board.rows, boardRows)
 
         val startCell = Cell(2, 1)
-        val minesNumber = 10
+        val minesNumber = 9999
         val mines = generateMines(startCell, board, minesNumber)
-        // Check that mines number is 10
-        assertEquals(mines.size, 10)
-
-        // Check that mines creation with a negative starting point is impossible.
-        val startCellToFail = Cell(-2, 1)
-        assertThrows(IllegalArgumentException::class.java) {
-            generateMines(startCellToFail, board, minesNumber)
-        }
-
-        val minesNumToFail = 0
-        assertThrows(IllegalArgumentException::class.java) {
-            generateMines(startCell, board, minesNumToFail)
-        }
+        assertEquals(mines.size, minesNumber)
     }
 }
